@@ -1,0 +1,24 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+
+interface AnimatedSectionProps {
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+  onClick?: () => void;
+}
+
+export const AnimatedSection: React.FC<AnimatedSectionProps> = ({ children, className = '', delay = 0, onClick }) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.6, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
+      className={className}
+      onClick={onClick}
+    >
+      {children}
+    </motion.div>
+  );
+};
