@@ -9,6 +9,24 @@ html {
   scroll-behavior: smooth;
   font-family: var(--font-body);
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+body {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+#root {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  width: 100% !important;
 }
 
 h1, h2, h3, .font-display {

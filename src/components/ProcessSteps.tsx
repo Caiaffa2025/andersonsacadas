@@ -47,7 +47,7 @@ export const ProcessSteps: React.FC = () => {
             Metodologia Ágil e Segura
           </div>
           <h2 className="font-display text-2xl sm:text-4xl font-bold text-white tracking-tight">
-            Como funciona o atendimento da SacadaPrime
+            Como funciona o atendimento da Anderson Sacadas
           </h2>
           <p className="mt-3 text-base text-slate-300">
             Do primeiro contato até o pós-atendimento, tudo pensado para respeitar o seu tempo e as regras do seu edifício.

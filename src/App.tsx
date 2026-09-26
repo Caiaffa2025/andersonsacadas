@@ -37,16 +37,16 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-[#0b0f17] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/25 selection:text-cyan-200 transition-colors duration-300">
+      <div className="min-h-screen bg-[#0b0f17] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/25 selection:text-cyan-200 transition-colors duration-300 overflow-x-hidden max-w-full w-full relative">
         
         {/* Subtle Horizontal Scroll Progress Bar */}
         <ScrollProgressBar />
 
-        {/* 3-Zone Top Bar */}
+        {/* 3-Zone Top Bar & Vertical Navigation Menu */}
         <Navbar onOpenQuoteModal={handleOpenQuoteModal} />
 
         {/* Main Content Flow */}
-        <main className="flex-grow">
+        <main className="flex-grow overflow-x-hidden max-w-full w-full">
           
           {/* Hero Section */}
           <Hero 

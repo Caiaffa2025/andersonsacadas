@@ -35,7 +35,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
   };
 
   const getWhatsAppForwardLink = () => {
-    const text = `Olá, SacadaPrime! Solicitação de Orçamento:%0A%0A` +
+    const text = `Olá, Anderson Sacadas! Solicitação de Orçamento:%0A%0A` +
       `• Nome: ${encodeURIComponent(name || 'Cliente')}%0A` +
       `• Telefone/WhatsApp: ${encodeURIComponent(phone)}%0A` +
       `• Bairro/Cidade: ${encodeURIComponent(neighborhood || 'Não informado')}%0A` +

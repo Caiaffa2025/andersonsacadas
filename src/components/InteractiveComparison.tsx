@@ -24,23 +24,23 @@ export const InteractiveComparison: React.FC = () => {
         </AnimatedSection>
 
         {/* Interactive Segmented Control Tabs */}
-        <AnimatedSection delay={0.1} className="flex items-center justify-center mb-8">
-          <div className="p-1 bg-slate-900 border border-slate-800 rounded-xl inline-flex gap-1">
+        <AnimatedSection delay={0.1} className="flex items-center justify-center mb-8 w-full max-w-full">
+          <div className="p-1 bg-slate-900 border border-slate-800 rounded-xl flex flex-col sm:flex-row w-full sm:w-auto gap-1">
             <button
               type="button"
               onClick={() => setActiveTab('depois')}
-              className={`px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold rounded-lg transition-all cursor-pointer text-center ${
                 activeTab === 'depois'
                   ? 'bg-cyan-400 text-slate-950 shadow-md shadow-cyan-500/20'
                   : 'text-slate-400 hover:text-white'
               }`}
             >
-              Depois da SacadaPrime (Sacada Restaurada)
+              Depois da Anderson Sacadas (Restaurada)
             </button>
             <button
               type="button"
               onClick={() => setActiveTab('antes')}
-              className={`px-5 py-2 text-xs sm:text-sm font-semibold rounded-lg transition-all cursor-pointer ${
+              className={`px-4 sm:px-5 py-2.5 text-xs sm:text-sm font-semibold rounded-lg transition-all cursor-pointer text-center ${
                 activeTab === 'antes'
                   ? 'bg-rose-500 text-white shadow-md shadow-rose-500/20'
                   : 'text-slate-400 hover:text-white'
@@ -72,7 +72,7 @@ export const InteractiveComparison: React.FC = () => {
                     ? 'bg-cyan-400 text-slate-950' 
                     : 'bg-rose-600 text-white'
                 }`}>
-                  {activeTab === 'depois' ? 'PADRÃO SACADAPRIME' : 'ESTADO DE RISCO CRÍTICO'}
+                  {activeTab === 'depois' ? 'PADRÃO ANDERSON SACADAS' : 'ESTADO DE RISCO CRÍTICO'}
                 </span>
               </div>
 
