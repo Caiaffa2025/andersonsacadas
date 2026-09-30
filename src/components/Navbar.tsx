@@ -18,8 +18,7 @@ import {
   MessageSquare,
   PanelLeftClose,
   PanelLeftOpen,
-  Send,
-  PhoneCall
+  Send
 } from 'lucide-react';
 import { useTheme } from '../context/ThemeContext';
 
@@ -113,13 +112,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
 
   return (
     <>
-      {/* TOP HEADER BAR (Sticky across desktop, tablet, and mobile) */}
-      <header className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+      {/* TOP HEADER BAR (Sticky top-0 with z-50 to guarantee 100% visibility during mobile scrolling) */}
+      <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled 
-          ? 'bg-[#0b0f17]/95 backdrop-blur-md shadow-lg shadow-black/40 border-b border-cyan-500/20' 
+          ? 'bg-[#0b0f17]/95 backdrop-blur-md shadow-xl shadow-black/50 border-b border-cyan-500/20' 
           : 'bg-[#0b0f17]/90 backdrop-blur-sm border-b border-slate-800/80'
       }`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
             
             {/* Brand Logo & Desktop Rail Toggle */}
@@ -129,7 +128,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                 type="button"
                 onClick={() => setSidebarExpanded(!sidebarExpanded)}
                 className="hidden xl:flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-cyan-400 border border-slate-700/80 transition-all cursor-pointer text-xs font-semibold"
-                title={sidebarExpanded ? 'Recolher Menu Lateral' : 'Expandir Menu Lateral'}
+                title={sidebarExpanded ? 'Recolher Menu' : 'Expandir Menu'}
               >
                 {sidebarExpanded ? (
                   <PanelLeftClose className="w-4 h-4 text-cyan-400" />
@@ -142,7 +141,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
               <a 
                 href="#" 
                 onClick={(e) => handleNavClick(e, '')}
-                className="flex items-center gap-2 group transition-opacity hover:opacity-95"
+                className="flex items-center gap-2 group transition-opacity hover:opacity-95 cursor-pointer"
               >
                 <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400 group-hover:bg-cyan-500/20 transition-all shadow-sm shadow-cyan-500/10 shrink-0">
                   <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
@@ -212,15 +211,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                 Orçamento
               </button>
 
-              {/* Mobile / Tablet Drawer Trigger Button (< 1024px) */}
+              {/* Mobile / Tablet Menu Button (< 1024px) */}
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 type="button"
-                className="lg:hidden p-2 text-slate-200 hover:text-white rounded-xl bg-slate-800/80 border border-slate-700/80 cursor-pointer transition-colors flex items-center gap-1"
+                className="lg:hidden p-2 text-slate-100 hover:text-cyan-300 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 cursor-pointer transition-colors flex items-center gap-1 shadow-sm active:scale-95"
                 aria-label="Abrir Menu Suspenso"
               >
                 <Menu className="w-5 h-5 text-cyan-400" />
-                <span className="text-xs font-bold text-slate-300 hidden xs:inline">Menu</span>
+                <span className="text-xs font-extrabold text-cyan-300">Menu</span>
               </button>
 
             </div>
@@ -231,7 +230,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
 
       {/* DESKTOP FLOATING LEFT RAIL (XL Screens only) */}
       <nav 
-        className={`hidden xl:flex fixed left-3 top-1/2 -translate-y-1/2 z-30 flex-col gap-1.5 p-2 rounded-2xl bg-slate-900/95 border border-cyan-500/30 backdrop-blur-xl shadow-2xl transition-all duration-300 ${
+        className={`hidden xl:flex fixed left-3 top-1/2 -translate-y-1/2 z-40 flex-col gap-1.5 p-2 rounded-2xl bg-slate-900/95 border border-cyan-500/30 backdrop-blur-xl shadow-2xl transition-all duration-300 ${
           sidebarExpanded ? 'w-52' : 'w-14'
         }`}
         aria-label="Navegação Lateral"
@@ -308,7 +307,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
 
       {/* FULL-SCREEN APP-LIKE MOBILE OVERLAY MENU DRAWER (< 1024px) */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-50 bg-[#0a0e17]/98 backdrop-blur-2xl flex flex-col justify-between overflow-y-auto animate-in fade-in duration-200">
+        <div className="lg:hidden fixed inset-0 z-[100] bg-[#0a0e17]/98 backdrop-blur-2xl flex flex-col justify-between overflow-y-auto animate-in fade-in duration-200">
           
           {/* Mobile Overlay Top Header Bar */}
           <div className="sticky top-0 z-10 px-4 sm:px-6 py-4 bg-[#0a0e17] border-b border-slate-800 flex items-center justify-between">
@@ -324,7 +323,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
             <button
               type="button"
               onClick={() => setMobileMenuOpen(false)}
-              className="p-2 rounded-xl bg-slate-800/90 text-slate-300 hover:text-white border border-slate-700/80 cursor-pointer flex items-center gap-1 text-xs font-bold"
+              className="p-2.5 rounded-xl bg-slate-800/90 text-slate-200 hover:text-white border border-slate-700/80 cursor-pointer flex items-center gap-1 text-xs font-bold active:scale-95 transition-all"
             >
               <X className="w-5 h-5 text-cyan-400" />
               <span>Fechar</span>
@@ -332,11 +331,11 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
           </div>
 
           {/* Mobile Overlay Content Body */}
-          <div className="p-4 sm:p-6 space-y-6 flex-grow">
+          <div className="p-4 sm:p-6 space-y-5 flex-grow">
             
-            <div className="p-3.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between text-xs text-cyan-300 font-medium">
-              <span>Selecione a seção desejada:</span>
-              <span className="font-mono text-[10px] text-cyan-400">Atendimento SP & Litoral</span>
+            <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-between text-xs text-cyan-300 font-medium">
+              <span>Navegue pelas seções:</span>
+              <span className="font-mono text-[10px] text-cyan-400">São Paulo & Litoral</span>
             </div>
 
             {/* Categorized Vertical Links Grid */}
@@ -350,10 +349,10 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                     key={idx}
                     href={link.href}
                     onClick={(e) => handleNavClick(e, link.id)}
-                    className={`p-3.5 rounded-xl flex items-center justify-between transition-all cursor-pointer border ${
+                    className={`p-3 rounded-xl flex items-center justify-between transition-all cursor-pointer border ${
                       isActive 
                         ? 'bg-cyan-500/20 border-cyan-500/50 text-cyan-300 shadow-md shadow-cyan-500/10 font-bold' 
-                        : 'bg-slate-900/80 border-slate-800/90 text-slate-200 hover:bg-slate-800 hover:text-white'
+                        : 'bg-slate-900/90 border-slate-800 text-slate-200 hover:bg-slate-800 hover:text-white'
                     }`}
                   >
                     <div className="flex items-center gap-3">
@@ -371,7 +370,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
           </div>
 
           {/* Mobile Overlay Bottom Actions Bar */}
-          <div className="p-4 sm:p-6 bg-[#070a10] border-t border-slate-800 space-y-3">
+          <div className="p-4 sm:p-6 bg-[#070a10] border-t border-slate-800 space-y-2.5">
             <a
               href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20para%20manuten%C3%A7%C3%A3o%20da%20minha%20sacada"
               target="_blank"
