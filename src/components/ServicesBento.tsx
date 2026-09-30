@@ -7,14 +7,12 @@ import {
   Wrench, 
   Droplets, 
   Cog, 
-  FileText, 
-  Sparkles,
   ChevronDown,
   ChevronUp,
-  MessageCircle,
-  SlidersHorizontal
+  SlidersHorizontal,
+  Sparkles
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { AnimatedSection } from './AnimatedSection';
 
 interface ServicesBentoProps {
@@ -111,19 +109,20 @@ export const ServicesBento: React.FC<ServicesBentoProps> = ({ onSelectService })
           </p>
         </AnimatedSection>
 
-        {/* 4 CORE PRIMARY SERVICE PILLARS (Clean, Large, Uncluttered) */}
+        {/* 4 CORE PRIMARY SERVICE PILLARS WITH PULSE GLOW MICRO-INTERACTION */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
           {corePillars.map((pillar, idx) => (
             <AnimatedSection key={pillar.id} delay={idx * 0.08}>
-              <div className="h-full flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all shadow-xl hover:shadow-cyan-500/5 group">
+              <div className="h-full flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-slate-900/80 border border-slate-800 hover:border-cyan-500/40 transition-all shadow-xl hover:shadow-cyan-500/10 group relative">
                 <div>
                   
                   {/* Top Badge & Icon */}
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
-                      {pillar.badge}
+                    <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3 text-cyan-400" />
+                      <span>{pillar.badge}</span>
                     </span>
-                    <div className="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center group-hover:border-cyan-400 group-hover:bg-cyan-500/10 transition-colors">
+                    <div className="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 flex items-center justify-center group-hover:border-cyan-400 group-hover:bg-cyan-500/10 transition-colors shadow-sm">
                       {pillar.icon}
                     </div>
                   </div>
@@ -153,18 +152,27 @@ export const ServicesBento: React.FC<ServicesBentoProps> = ({ onSelectService })
 
                 </div>
 
-                {/* Footer Action */}
+                {/* Footer Action with Glowing Pulse & Shimmer Micro-Interaction */}
                 <div className="mt-6 pt-4 border-t border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
                   <span className="text-[11px] text-slate-400 font-medium">
                     Frequência: <strong className="text-slate-300">{pillar.recommended}</strong>
                   </span>
 
+                  {/* CTA BUTTON WITH SOFT GLOW PULSE & SHIMMER */}
                   <button
                     onClick={() => onSelectService(pillar.title)}
-                    className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs font-extrabold shadow-md shadow-cyan-500/20 transition-all active:scale-95 cursor-pointer"
+                    className="relative group/btn overflow-hidden inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-400 via-cyan-300 to-cyan-400 hover:from-cyan-300 hover:to-cyan-200 text-slate-950 text-xs font-extrabold shadow-lg shadow-cyan-500/25 hover:shadow-cyan-400/50 transition-all duration-300 active:scale-95 cursor-pointer border border-cyan-300/60"
                   >
-                    <span>{pillar.ctaText}</span>
-                    <ArrowUpRight className="w-4 h-4" />
+                    {/* Soft animated glowing aura pulse background */}
+                    <span className="absolute -inset-1 rounded-xl bg-cyan-400/30 blur-sm group-hover/btn:blur-md animate-pulse transition-all pointer-events-none" />
+                    
+                    {/* Light shimmer sweep reflection */}
+                    <span className="absolute inset-0 w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent -skew-x-12 -translate-x-full group-hover/btn:translate-x-[300%] transition-transform duration-1000 ease-in-out pointer-events-none" />
+
+                    <span className="relative z-10 flex items-center gap-2">
+                      <span>{pillar.ctaText}</span>
+                      <ArrowUpRight className="w-4 h-4 transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+                    </span>
                   </button>
                 </div>
 
@@ -178,7 +186,7 @@ export const ServicesBento: React.FC<ServicesBentoProps> = ({ onSelectService })
           <button
             type="button"
             onClick={() => setShowAllServices(!showAllServices)}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/40 text-slate-300 hover:text-white text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-md"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-slate-900 border border-slate-800 hover:border-cyan-500/40 text-slate-300 hover:text-white text-xs sm:text-sm font-bold transition-all cursor-pointer shadow-md active:scale-95"
           >
             <SlidersHorizontal className="w-4 h-4 text-cyan-400" />
             <span>{showAllServices ? 'Ocultar Catálogo Completo (15 Serviços)' : 'Ver Catálogo Completo de Serviços Específicos (15 Opções)'}</span>
@@ -231,7 +239,7 @@ export const ServicesBento: React.FC<ServicesBentoProps> = ({ onSelectService })
               {filteredServices.map((service) => (
                 <div
                   key={service.id}
-                  className="p-5 rounded-xl bg-slate-900/60 border border-slate-800/90 flex flex-col justify-between hover:border-slate-700 transition-colors"
+                  className="p-5 rounded-xl bg-slate-900/60 border border-slate-800/90 flex flex-col justify-between hover:border-cyan-500/40 transition-colors group/card"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-2">
@@ -243,7 +251,7 @@ export const ServicesBento: React.FC<ServicesBentoProps> = ({ onSelectService })
                       </span>
                     </div>
 
-                    <h4 className="font-display text-base font-bold text-white">
+                    <h4 className="font-display text-base font-bold text-white group-hover/card:text-cyan-300 transition-colors">
                       {service.title}
                     </h4>
 
@@ -254,11 +262,13 @@ export const ServicesBento: React.FC<ServicesBentoProps> = ({ onSelectService })
 
                   <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
                     <span className="text-[11px] text-slate-400">Atendimento sob medida</span>
+                    
                     <button
                       onClick={() => onSelectService(service.title)}
-                      className="text-xs font-bold text-cyan-400 hover:text-cyan-300 cursor-pointer"
+                      className="relative overflow-hidden inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-400 text-cyan-300 hover:text-slate-950 border border-cyan-500/30 text-xs font-bold transition-all duration-300 active:scale-95 cursor-pointer"
                     >
-                      Solicitar →
+                      <span>Solicitar</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
                     </button>
                   </div>
                 </div>

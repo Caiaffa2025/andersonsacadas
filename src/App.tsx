@@ -18,6 +18,7 @@ import { FaqSection } from './components/FaqSection';
 import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { ScrollToTopButton } from './components/ScrollToTopButton';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -101,6 +102,9 @@ export default function App() {
           onClose={() => setQuoteModalOpen(false)}
           initialTopic={modalInitialTopic}
         />
+
+        {/* Fixed Back to Top Button */}
+        <ScrollToTopButton />
 
         {/* Discreet Floating WhatsApp Button */}
         <FloatingWhatsApp />

@@ -112,17 +112,17 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
 
   return (
     <>
-      {/* TOP HEADER BAR (Sticky top-0 with z-50 to guarantee 100% visibility during mobile scrolling) */}
+      {/* TOP HEADER BAR (Sticky top-0 with z-50 to guarantee 100% visibility on all mobile devices) */}
       <header className={`sticky top-0 z-50 w-full transition-all duration-300 ${
         scrolled 
           ? 'bg-[#0b0f17]/95 backdrop-blur-md shadow-xl shadow-black/50 border-b border-cyan-500/20' 
           : 'bg-[#0b0f17]/90 backdrop-blur-sm border-b border-slate-800/80'
       }`}>
         <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
+          <div className="flex items-center justify-between h-16 sm:h-20 gap-2">
             
-            {/* Brand Logo & Desktop Rail Toggle */}
-            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Brand Logo & Rail Toggle */}
+            <div className="flex items-center gap-2 shrink-0 max-w-[65%] sm:max-w-none">
               {/* Desktop Left Rail Toggle */}
               <button
                 type="button"
@@ -141,14 +141,14 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
               <a 
                 href="#" 
                 onClick={(e) => handleNavClick(e, '')}
-                className="flex items-center gap-2 group transition-opacity hover:opacity-95 cursor-pointer"
+                className="flex items-center gap-1.5 sm:gap-2 group transition-opacity hover:opacity-95 cursor-pointer truncate"
               >
-                <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400 group-hover:bg-cyan-500/20 transition-all shadow-sm shadow-cyan-500/10 shrink-0">
+                <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-400 group-hover:border-cyan-400 group-hover:bg-cyan-500/20 transition-all shadow-sm shrink-0">
                   <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
                 </div>
-                <span className="font-display text-base sm:text-xl lg:text-2xl font-black tracking-tight whitespace-nowrap">
-                  <span className="text-cyan-300 dark:text-cyan-300 font-black drop-shadow-[0_1px_8px_rgba(6,182,212,0.8)]">Anderson</span>
-                  <span className="text-white dark:text-slate-100 font-extrabold ml-0.5">Sacadas</span>
+                <span className="font-display text-sm sm:text-xl lg:text-2xl font-black tracking-tight whitespace-nowrap truncate">
+                  <span className="text-cyan-300 font-black drop-shadow-[0_1px_8px_rgba(6,182,212,0.8)]">Anderson</span>
+                  <span className="text-white font-extrabold ml-0.5">Sacadas</span>
                 </span>
               </a>
             </div>
@@ -175,13 +175,13 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
             </nav>
 
             {/* Quick Actions Zone (Desktop, Tablet & Mobile) */}
-            <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
               
               {/* Theme Toggle */}
               <button
                 onClick={toggleTheme}
                 type="button"
-                className="p-2 rounded-xl bg-slate-800/80 border border-slate-700/80 text-slate-300 hover:text-cyan-400 transition-all cursor-pointer"
+                className="p-1.5 sm:p-2 rounded-xl bg-slate-800/80 border border-slate-700/80 text-slate-300 hover:text-cyan-400 transition-all cursor-pointer"
                 title={theme === 'dark' ? 'Mudar para modo claro' : 'Mudar para modo escuro'}
                 aria-label="Alternar tema"
               >
@@ -197,29 +197,29 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
                 href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20para%20manuten%C3%A7%C3%A3o%20da%20minha%20sacada"
                 target="_blank"
                 rel="noreferrer"
-                className="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-xl transition-all shadow-sm"
+                className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-xl transition-all shadow-sm"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-400" />
                 <span>WhatsApp</span>
               </a>
 
-              {/* Quote Modal Button */}
+              {/* Quote Modal Button (Visible on sm and up; on smaller phones it's available in bottom dock and menu) */}
               <button
                 onClick={() => onOpenQuoteModal()}
-                className="inline-flex items-center justify-center px-3 sm:px-4 py-2 text-xs font-extrabold text-slate-950 bg-cyan-400 hover:bg-cyan-300 rounded-xl transition-all shadow-md shadow-cyan-500/20 whitespace-nowrap cursor-pointer active:scale-95"
+                className="hidden sm:inline-flex items-center justify-center px-3.5 py-2 text-xs font-extrabold text-slate-950 bg-cyan-400 hover:bg-cyan-300 rounded-xl transition-all shadow-md shadow-cyan-500/20 whitespace-nowrap cursor-pointer active:scale-95"
               >
                 Orçamento
               </button>
 
-              {/* Mobile / Tablet Menu Button (< 1024px) */}
+              {/* Mobile / Tablet Menu Button (< 1024px) - GUARANTEED FULL VISIBILITY */}
               <button
                 onClick={() => setMobileMenuOpen(true)}
                 type="button"
-                className="lg:hidden p-2 text-slate-100 hover:text-cyan-300 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 cursor-pointer transition-colors flex items-center gap-1 shadow-sm active:scale-95"
+                className="lg:hidden px-2.5 py-1.5 text-slate-100 hover:text-cyan-300 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/50 cursor-pointer transition-colors flex items-center gap-1.5 shadow-md shadow-cyan-500/10 active:scale-95 shrink-0"
                 aria-label="Abrir Menu Suspenso"
               >
-                <Menu className="w-5 h-5 text-cyan-400" />
-                <span className="text-xs font-extrabold text-cyan-300">Menu</span>
+                <Menu className="w-5 h-5 text-cyan-300" />
+                <span className="text-xs font-black tracking-wide text-white">Menu</span>
               </button>
 
             </div>
