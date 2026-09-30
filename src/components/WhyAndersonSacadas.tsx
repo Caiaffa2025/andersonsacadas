@@ -7,75 +7,69 @@ import {
   UserCheck, 
   ThumbsUp, 
   Award, 
-  BookOpenCheck, 
   Clock, 
   Building,
-  Check
+  CheckCircle2,
+  HeartHandshake
 } from 'lucide-react';
 import { AnimatedSection } from './AnimatedSection';
 
 export const WhyAndersonSacadas: React.FC = () => {
-  const guarantees = [
+  const categories = [
     {
-      icon: <CircleDollarSign className="w-5 h-5 text-cyan-400" />,
-      title: 'Sem Taxa de Visita ou Orçamento',
-      desc: 'Não cobramos taxas de visita técnica ou orçamento. Avaliação sem compromisso.',
-      highlight: '100% Gratuito',
+      title: 'Transparência & Custo Zero',
+      icon: <CircleDollarSign className="w-6 h-6 text-cyan-400" />,
+      items: [
+        {
+          title: 'Zero Taxa de Visita Técnica',
+          desc: 'Avaliação presencial ou por WhatsApp totalmente gratuita e sem nenhum compromisso.',
+        },
+        {
+          title: 'Pagamento Somente Pós-Aprovação',
+          desc: 'Você só realiza o pagamento após testar, aprovar e constatar o deslizar macio.',
+        },
+        {
+          title: 'Parcelamento sem Juros',
+          desc: 'Pagamento facilitado em até 12x no cartão de crédito ou desconto no Pix.',
+        },
+      ]
     },
     {
-      icon: <BadgeCheck className="w-5 h-5 text-emerald-400" />,
-      title: 'Pagamento Pós-Aprovação',
-      desc: 'Você só realiza o pagamento após testar, aprovar e comprovar a qualidade do serviço executado.',
-      highlight: 'Satisfação Garantida',
+      title: 'Atendimento & Respeito ao Seu Tempo',
+      icon: <Clock className="w-6 h-6 text-emerald-400" />,
+      items: [
+        {
+          title: 'Atendimento Pessoal Direto',
+          desc: 'A mesma pessoa que fala com você no WhatsApp é quem executa o serviço técnico.',
+        },
+        {
+          title: 'Pontualidade Britânica',
+          desc: 'Respeito aos horários agendados e às regras de silêncio e barulho do condomínio.',
+        },
+        {
+          title: 'Manual & Vídeo Tutorial Exclusivo',
+          desc: 'Entregamos um guia prático para você manter os trilhos limpos sem esforço.',
+        },
+      ]
     },
     {
-      icon: <CreditCard className="w-5 h-5 text-cyan-400" />,
-      title: 'Facilidade no Pagamento',
-      desc: 'Condições facilitadas com parcelamento sem juros no cartão de crédito e desconto no Pix.',
-      highlight: 'Até 12x no cartão',
-    },
-    {
-      icon: <UserCheck className="w-5 h-5 text-cyan-400" />,
-      title: 'Atendimento Sempre Pela Mesma Pessoa',
-      desc: 'Atendimento 100% personalizado e humanizado. A mesma pessoa que te atende no WhatsApp faz a visita técnica.',
-      highlight: 'Contato Direto',
-    },
-    {
-      icon: <ThumbsUp className="w-5 h-5 text-cyan-400" />,
-      title: 'Alto Índice de Aprovação',
-      desc: 'Reconhecimento máximo por parte dos moradores e aprovação em assembleias de condomínio.',
-      highlight: '99.8% de Satisfação',
-    },
-    {
-      icon: <Award className="w-5 h-5 text-cyan-400" />,
-      title: 'Garantia Formal em Todo Serviço',
-      desc: 'Garantia total por escrito em todas as peças e serviços de manutenção em envidraçamento.',
-      highlight: 'Até 2 anos por escrito',
-    },
-    {
-      icon: <BookOpenCheck className="w-5 h-5 text-cyan-400" />,
-      title: 'Manual & Tutorial Exclusivo de Conservação',
-      desc: 'Entregamos um manual prático e tutorial em vídeo de uso e conservação para prolongar a vida útil dos trilhos.',
-      highlight: 'Exclusividade Anderson',
-    },
-    {
-      icon: <Clock className="w-5 h-5 text-cyan-400" />,
-      title: 'Pontualidade & Cordialidade Rara',
-      desc: 'Pontualidade britânica no horário agendado, respeito rigoroso às normas e silêncio predial.',
-      highlight: 'Respeito ao seu Tempo',
-    },
-    {
-      icon: <ShieldCheck className="w-5 h-5 text-emerald-400" />,
-      title: 'Zero Registros em Sites de Reclamação',
-      desc: 'Reputação intacta e nota máxima. Nenhum registro em portais de queixas (Reclame Aqui/Procon).',
-      highlight: 'Reputação Ilibada',
-    },
-    {
-      icon: <Building className="w-5 h-5 text-cyan-400" />,
-      title: 'Mais de 240 Condomínios Atendidos',
-      desc: 'Mais de 90 condomínios atendidos frequentemente com contrato e mais de 150 atendidos esporadicamente.',
-      highlight: '+240 Edifícios',
-    },
+      title: 'Segurança, Normas & Reputação',
+      icon: <ShieldCheck className="w-6 h-6 text-purple-400" />,
+      items: [
+        {
+          title: 'Garantia Formal de até 2 Anos',
+          desc: 'Termo de garantia por escrito cobrindo peças e mão de obra de manutenção.',
+        },
+        {
+          title: 'Zero Queixas no Reclame Aqui',
+          desc: 'Reputação ilibada e nota máxima de satisfação com mais de uma década de história.',
+        },
+        {
+          title: '+240 Condomínios Atendidos',
+          desc: 'Aprovados em assembleias e dezenas de edifícios na Grande SP e Litoral.',
+        },
+      ]
+    }
   ];
 
   return (
@@ -84,47 +78,57 @@ export const WhyAndersonSacadas: React.FC = () => {
         
         {/* Header */}
         <AnimatedSection className="text-center max-w-3xl mx-auto mb-14">
-          <div className="text-xs font-semibold uppercase tracking-wider text-cyan-400 mb-2">
-            Compromisso de Transparência & Qualidade
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-extrabold uppercase tracking-wider mb-3">
+            <HeartHandshake className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Por Que Fazer Comigo</span>
           </div>
           <h2 className="font-display text-2xl sm:text-4xl font-bold text-white tracking-tight">
-            Por que escolher a <span className="text-cyan-300 dark:text-cyan-300 font-black drop-shadow-[0_1px_8px_rgba(6,182,212,0.8)]">Anderson Sacadas</span>?
+            Garantia de segurança, honestidade e custo justo
           </h2>
-          <p className="mt-3 text-base text-slate-300">
-            Diferenciais concretos construídos ao longo de anos de trabalho sério, onde a sua segurança e a sua economia vêm sempre em primeiro lugar.
+          <p className="mt-3 text-sm sm:text-base text-slate-300 leading-relaxed">
+            Diferenciais concretos construídos desde 2014, garantindo que você não precise gastar fortuna trocando o que pode ser perfeitamente restaurado.
           </p>
         </AnimatedSection>
 
-        {/* 10 Guarantees Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {guarantees.map((item, index) => (
-            <AnimatedSection
-              key={index}
-              delay={index * 0.05}
-              className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-cyan-500/40 transition-all flex flex-col justify-between group"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-3">
-                  <div className="w-10 h-10 rounded-xl bg-slate-800 border border-slate-700/80 flex items-center justify-center group-hover:border-cyan-500/50 transition-colors">
-                    {item.icon}
+        {/* 3 Streamlined Column Pillar Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {categories.map((cat, idx) => (
+            <AnimatedSection key={idx} delay={idx * 0.1}>
+              <div className="h-full p-6 sm:p-8 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-cyan-500/30 transition-all flex flex-col justify-between shadow-xl">
+                <div>
+                  
+                  {/* Category Header */}
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-slate-800">
+                    <div className="p-2.5 rounded-xl bg-slate-800 border border-slate-700">
+                      {cat.icon}
+                    </div>
+                    <h3 className="font-display text-lg sm:text-xl font-extrabold text-white">
+                      {cat.title}
+                    </h3>
                   </div>
-                  <span className="text-[11px] font-bold px-2.5 py-1 rounded-md bg-cyan-500/10 text-cyan-300 border border-cyan-500/20">
-                    {item.highlight}
-                  </span>
+
+                  {/* Bullet points */}
+                  <div className="space-y-5">
+                    {cat.items.map((item, itemIdx) => (
+                      <div key={itemIdx} className="flex items-start gap-3">
+                        <CheckCircle2 className="w-5 h-5 text-cyan-400 shrink-0 mt-0.5" />
+                        <div>
+                          <h4 className="font-display text-sm font-bold text-white">
+                            {item.title}
+                          </h4>
+                          <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                            {item.desc}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
                 </div>
 
-                <h3 className="font-display text-base font-bold text-white group-hover:text-cyan-300 transition-colors">
-                  {item.title}
-                </h3>
-
-                <p className="mt-2 text-xs sm:text-sm text-slate-300 leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-
-              <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center gap-1.5 text-[11px] text-cyan-400">
-                <Check className="w-3.5 h-3.5" />
-                <span>Garantia de Padrão Técnico</span>
+                <div className="mt-6 pt-4 border-t border-slate-800 text-[11px] font-semibold text-cyan-300">
+                  ✓ Padrão Anderson Sacadas Desde 2014
+                </div>
               </div>
             </AnimatedSection>
           ))}
@@ -133,11 +137,11 @@ export const WhyAndersonSacadas: React.FC = () => {
         {/* Highlight Callout Box */}
         <AnimatedSection delay={0.3} className="mt-12 p-6 sm:p-8 rounded-2xl bg-gradient-to-r from-cyan-950/40 via-slate-900 to-emerald-950/30 border border-cyan-500/30 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="space-y-1 text-center sm:text-left">
-            <h4 className="font-display text-lg font-bold text-white">
-              Quer a certeza de que sua sacada ficará 100% segura e macia de operar?
+            <h4 className="font-display text-base sm:text-lg font-bold text-white">
+              Sua sacada travou ou está vazando água?
             </h4>
             <p className="text-xs sm:text-sm text-slate-300">
-              Chame o Anderson no WhatsApp. Visita técnica e avaliação totalmente sem custo.
+              Solicite uma avaliação sem custo e receba o valor prévio do conserto no mesmo dia.
             </p>
           </div>
 
@@ -145,7 +149,7 @@ export const WhyAndersonSacadas: React.FC = () => {
             href="https://wa.me/5511999999999?text=Ol%C3%A1%20Anderson!%20Gostaria%20de%20agendar%20uma%20visita%20t%C3%A9cnica%20gratuita%20para%20minha%20sacada"
             target="_blank"
             rel="noreferrer"
-            className="px-6 py-3 text-xs sm:text-sm font-bold text-slate-950 bg-cyan-400 hover:bg-cyan-300 rounded-xl transition-all shadow-md shadow-cyan-500/20 whitespace-nowrap cursor-pointer active:scale-95"
+            className="px-6 py-3.5 text-xs sm:text-sm font-extrabold text-slate-950 bg-cyan-400 hover:bg-cyan-300 rounded-xl transition-all shadow-md shadow-cyan-500/20 whitespace-nowrap cursor-pointer active:scale-95"
           >
             Agendar Visita Sem Custo
           </a>

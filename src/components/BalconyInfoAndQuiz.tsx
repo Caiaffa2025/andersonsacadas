@@ -48,13 +48,13 @@ const QUIZ_QUESTIONS: Question[] = [
   },
   {
     id: 3,
-    question: 'O que é a sigla ART exigida pela administração dos condomínios?',
+    question: 'Por que o silicone comum de banheiro não deve ser usado para vedar a sacada?',
     options: [
-      { label: 'A', text: 'Autorização do Rolo do Trilho', isCorrect: false },
-      { label: 'B', text: 'Anotação de Responsabilidade Técnica emitida por Engenheiro credenciado', isCorrect: true },
-      { label: 'C', text: 'Atestado de Reforma do Apartamento', isCorrect: false },
+      { label: 'A', text: 'O silicone comum resseca com sol e cria fungos e frestas de vazamento', isCorrect: true },
+      { label: 'B', text: 'O silicone comum é muito caro', isCorrect: false },
+      { label: 'C', text: 'Não há diferença, qualquer silicone serve', isCorrect: false },
     ],
-    explanation: 'A ART é o documento oficial do CREA assinado por um engenheiro civil/mecânico responsável que comprova que a sacada atende aos parâmetros de segurança contra ventanias.',
+    explanation: 'Apenas silicones estruturais com proteção contra raios UV suportam o sol forte na sacada sem ressecar, descascar ou permitir vazamento de água de chuva.',
   },
   {
     id: 4,

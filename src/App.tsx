@@ -37,7 +37,7 @@ export default function App() {
 
   return (
     <ThemeProvider>
-      <div className="min-h-screen bg-[#0b0f17] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/25 selection:text-cyan-200 transition-colors duration-300 overflow-x-hidden max-w-full w-full relative">
+      <div className="min-h-screen bg-[#0b0f17] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/25 selection:text-cyan-200 transition-colors duration-300 overflow-x-hidden max-w-full w-full relative pb-14 md:pb-0">
         
         {/* Subtle Horizontal Scroll Progress Bar */}
         <ScrollProgressBar />

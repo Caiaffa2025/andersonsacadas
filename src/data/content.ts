@@ -171,11 +171,11 @@ export const SERVICES: ServiceItem[] = [
   {
     id: 'laudos-seguranca',
     number: '14',
-    title: 'Laudos Técnicos de Segurança',
-    shortDesc: 'Emissão de Laudo de Vistoria de Conformidade e Anotação de Responsabilidade Técnica (ART / ABNT NBR 16259).',
-    fullDesc: 'Documento oficial assinado por Engenheiro credenciado no CREA para prestação de contas à administração do condomínio e seguro predial.',
-    features: ['Validade legal perante o condomínio', 'Certificação de estabilidade estrutural', 'Assinado por Engenheiro Responsável'],
-    recommendedInterval: 'Exigido anualmente por condomínios',
+    title: 'Vistoria e Relatório de Segurança',
+    shortDesc: 'Vistoria completa e emissão de Comprovante de Conformidade Técnica para o seu condomínio (NBR 16259).',
+    fullDesc: 'Documento de vistoria técnica e verificação de estabilidade para prestação de contas à administração do condomínio e garantia de segurança.',
+    features: ['Validade perante o condomínio', 'Certificação de estabilidade estrutural', 'Checklist detalhado de 28 pontos'],
+    recommendedInterval: 'Recomendado anualmente por condomínios',
     category: 'consultoria',
   },
   {
@@ -207,8 +207,8 @@ export const TESTIMONIALS: TestimonialItem[] = [
     role: 'Arquiteta & Síndica',
     condo: 'Residencial Reserva Imperial',
     location: 'Alphaville, Barueri',
-    problem: 'Vários apartamentos com infiltração severa no rodapé durante chuvas de vento, danificando tacos de madeira. Precisávamos de laudo com ART e peças resistentes para 32 sacadas.',
-    solution: 'Fizeram um mutirão preventivo impecável com troca de vedações em silicone estrutural e escovas náuticas. Zero infiltrações no último verão e laudo aprovado sem ressalvas na assembleia.',
+    problem: 'Vários apartamentos com infiltração severa no rodapé durante chuvas de vento, danificando tacos de madeira. Precisávamos de relatório de revisão preventiva e peças resistentes para 32 sacadas.',
+    solution: 'Fizeram um mutirão preventivo impecável com troca de vedações em silicone estrutural e escovas náuticas. Zero infiltrações no último verão e relatório aprovado sem ressalvas na assembleia.',
     rating: 5,
   },
   {
@@ -240,8 +240,8 @@ export const FAQ_ITEMS: FaqItem[] = [
     category: 'garantia',
   },
   {
-    question: 'Vocês emitem ART (Anotação de Responsabilidade Técnica) e laudo para o condomínio?',
-    answer: 'Sim. Contamos com engenheiro responsável habilitado no CREA e emitimos ART e Laudo Técnico de Conformidade segundo a Norma ABNT NBR 16259 para atender a todas as exigências das administrações condominiais.',
+    question: 'Vocês emitem comprovante de revisão e relatório para o condomínio?',
+    answer: 'Sim! Emitimos o Comprovante de Manutenção Preventiva e Relatório Técnico de Conformidade segundo as diretrizes da Norma ABNT NBR 16259 para atender a todas as exigências e solicitações das administrações de condomínio.',
     category: 'garantia',
   },
   {

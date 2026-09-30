@@ -62,7 +62,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onScrollToSimulato
               </div>
               <div className="flex items-center gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-cyan-400 shrink-0" />
-                <span>Laudo técnico em conformidade com NBR 16259</span>
+                <span>Inspeção técnica em conformidade com NBR 16259</span>
               </div>
             </div>
 
@@ -93,7 +93,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onScrollToSimulato
               <span aria-hidden="true">·</span>
               <span>Garantia de até 2 anos por escrito</span>
               <span aria-hidden="true">·</span>
-              <span>Nota Fiscal e ART</span>
+              <span>Nota Fiscal e Termo Formal</span>
             </div>
 
           </motion.div>

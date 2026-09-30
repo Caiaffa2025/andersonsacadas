@@ -137,10 +137,11 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
         </div>
 
         {/* Bottom bar with copyright */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
+        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px] border-t border-slate-800/60 mt-8">
           <div>
             © {new Date().getFullYear()} Anderson Sacadas - Engenharia e Manutenção de Envidraçamento de Sacadas. Todos os direitos reservados. Desde 2014.
           </div>
+
           <div className="flex items-center gap-4">
             <span>Privacidade & Termos</span>
             <span>·</span>
@@ -150,7 +151,7 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
               onClick={onOpenQuoteModal}
               className="text-cyan-400 hover:underline cursor-pointer"
             >
-              Pedir Orçamento
+              Solicitar Orçamento
             </button>
           </div>
         </div>

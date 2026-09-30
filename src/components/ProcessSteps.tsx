@@ -31,8 +31,8 @@ export const ProcessSteps: React.FC = () => {
     },
     {
       num: '05',
-      title: 'Garantia por escrito e Laudo',
-      desc: 'Emissão de termo de garantia formal de até 2 anos e laudo técnico para o condomínio caso solicitado.',
+      title: 'Garantia por escrito e Comprovante',
+      desc: 'Emissão de termo de garantia formal de até 2 anos e comprovante de revisão preventiva para o seu condomínio.',
       icon: <ShieldCheck className="w-5 h-5 text-cyan-400" />,
     },
   ];
