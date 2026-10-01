@@ -198,7 +198,7 @@ export const TESTIMONIALS: TestimonialItem[] = [
     condo: 'Condomínio Edifício Mirante do Parque',
     location: 'Vila Mariana, São Paulo',
     problem: 'Três vidros emperrados e a empresa que instalou em 2018 sumiu do mercado. Duas vidraçarias disseram que eu teria que trocar os 18 metros de sacada por R$ 26 mil.',
-    solution: 'A SacadaPrime identificou que era o modelo antigo com patente de trava. Eles usinaram as guias no próprio dia e trocaram as roldanas por inox. Gastei uma fração do valor e a sacada ficou mais leve do que quando nova.',
+    solution: 'A Anderson Sacadas identificou que era o modelo antigo com patente de trava. Eles usinaram as guias no próprio dia e trocaram as roldanas por inox. Gastei uma fração do valor e a sacada ficou mais leve do que quando nova.',
     rating: 5,
   },
   {

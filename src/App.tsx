@@ -19,6 +19,7 @@ import { Footer } from './components/Footer';
 import { QuoteModal } from './components/QuoteModal';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
+import { SEOHead } from './components/SEOHead';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -38,6 +39,7 @@ export default function App() {
 
   return (
     <ThemeProvider>
+      <SEOHead />
       <div className="min-h-screen bg-[#0b0f17] text-slate-100 flex flex-col font-sans selection:bg-cyan-500/25 selection:text-cyan-200 transition-colors duration-300 overflow-x-hidden max-w-full w-full relative pb-14 md:pb-0">
         
         {/* Subtle Horizontal Scroll Progress Bar */}

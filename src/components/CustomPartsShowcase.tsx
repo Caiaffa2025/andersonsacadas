@@ -132,7 +132,7 @@ export const CustomPartsShowcase: React.FC<CustomPartsShowcaseProps> = ({ onOpen
 
           <div className="p-5 rounded-xl bg-cyan-950/20 border border-cyan-500/30">
             <div className="text-xs font-semibold text-cyan-400 uppercase tracking-wider mb-2">
-              Roldana Blindada SacadaPrime
+              Roldana Blindada Anderson Sacadas
             </div>
             <ul className="space-y-2 text-xs text-slate-200">
               <li className="flex items-center gap-2">

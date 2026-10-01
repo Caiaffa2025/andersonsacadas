@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldAlert, Award, Cpu, Check, HelpCircle, Wrench, Layers } from 'lucide-react';
+import { ShieldAlert, Cpu, Check } from 'lucide-react';
 import { AnimatedSection } from './AnimatedSection';
 import technicianImg from '../assets/images/technician_glass_repair_1790377120566.jpg';
 import customPartsImg from '../assets/images/custom_machined_parts_1790377130407.jpg';
@@ -7,7 +7,7 @@ import { STATS } from '../data/content';
 
 export const OriginStory: React.FC = () => {
   return (
-    <section id="diferenciais" className="py-16 sm:py-24 border-b border-slate-800/80 bg-[#0d121c]/60">
+    <section id="por-que-anderson" className="py-16 sm:py-24 border-b border-slate-800/80 bg-[#0d121c]/60">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -16,7 +16,7 @@ export const OriginStory: React.FC = () => {
             Nossa Trajetória e Compromisso
           </div>
           <h2 className="font-display text-2xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
-            Por que criamos a SacadaPrime em 2014? A verdade sobre o mercado de sacadas.
+            Por que criamos a Anderson Sacadas em 2014? A verdade sobre o mercado de sacadas.
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-300 leading-relaxed">
             Ao longo dos anos, testemunhamos o mesmo drama em milhares de condomínios: dezenas de empresas de instalação abrem, vendem sacadas caras e, após 2 ou 3 anos, 
@@ -65,7 +65,7 @@ export const OriginStory: React.FC = () => {
                 <Cpu className="w-5 h-5" />
               </div>
               <h3 className="font-display text-lg font-bold text-white">
-                A visão e especialização da SacadaPrime:
+                A visão e especialização da Anderson Sacadas:
               </h3>
             </div>
 
@@ -97,7 +97,7 @@ export const OriginStory: React.FC = () => {
           <div className="relative rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 group">
             <img 
               src={technicianImg} 
-              alt="Técnico da SacadaPrime regulando trilho de sacada com precisão milimétrica" 
+              alt="Técnico da Anderson Sacadas regulando trilho de sacada com precisão milimétrica" 
               className="w-full h-[320px] object-cover group-hover:scale-105 transition-transform duration-500"
               referrerPolicy="no-referrer"
             />
@@ -155,4 +155,3 @@ export const OriginStory: React.FC = () => {
     </section>
   );
 };
-
