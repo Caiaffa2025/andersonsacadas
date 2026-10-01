@@ -14,8 +14,9 @@ app.use(express.json());
 
 // Initialize Gemini SDK with telemetry header
 const getAIClient = () => {
+  const apiKey = process.env.GEMINI_API_KEY || '';
   return new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
+    apiKey,
     httpOptions: {
       headers: {
         'User-Agent': 'aistudio-build',
@@ -46,30 +47,44 @@ Diretrizes Principais:
   try {
     const ai = getAIClient();
 
-    // Convert messages for model
-    let contents = messages.map((m: { role: string; content: string }) => ({
+    // Raw contents mapping
+    const rawContents = messages.map((m: { role: string; content: string }) => ({
       role: m.role === 'user' ? 'user' : 'model',
       parts: [{ text: m.content }],
     }));
 
-    // CRITICAL FIX FOR GEMINI API: First element in contents MUST have role 'user'
-    while (contents.length > 0 && contents[0].role === 'model') {
-      contents.shift();
+    // Build strictly alternating turn history (user -> model -> user -> model)
+    const cleanContents: { role: 'user' | 'model'; parts: { text: string }[] }[] = [];
+
+    for (const item of rawContents) {
+      if (cleanContents.length === 0) {
+        // History MUST begin with a 'user' turn
+        if (item.role === 'user') {
+          cleanContents.push({ role: 'user', parts: [{ text: item.parts[0].text }] });
+        }
+      } else {
+        const last = cleanContents[cleanContents.length - 1];
+        if (last.role === item.role) {
+          // Merge consecutive turns of same role to avoid API turn violation
+          last.parts[0].text += `\n\n${item.parts[0].text}`;
+        } else {
+          cleanContents.push({ role: item.role as 'user' | 'model', parts: [{ text: item.parts[0].text }] });
+        }
+      }
     }
 
-    if (contents.length === 0) {
-      const lastUserMsg = messages.filter((m: any) => m.role === 'user').pop();
-      contents = [
-        {
-          role: 'user',
-          parts: [{ text: lastUserMsg?.content || 'Olá, gostaria de saber sobre manutenção de sacadas.' }],
-        },
-      ];
+    // Fallback if no user message found in history
+    if (cleanContents.length === 0) {
+      const lastUserQuery = messages.filter((m: any) => m.role === 'user').pop();
+      cleanContents.push({
+        role: 'user',
+        parts: [{ text: lastUserQuery?.content || 'Olá, como funciona a manutenção de sacadas?' }],
+      });
     }
 
     const response = await ai.models.generateContent({
       model: 'gemini-3.8-flash',
-      contents,
+      contents: cleanContents,
       config: {
         systemInstruction,
         temperature: 0.7,
@@ -87,14 +102,16 @@ Diretrizes Principais:
     
     let fallbackReply = 'Nossa equipe técnica da **Anderson Sacadas** (desde 2014) atende toda a Grande SP e Litoral sem taxa de visita. Você pode agendar sua avaliação gratuita no WhatsApp **(11) 93449-3446**!';
 
-    if (lastUserQuery.includes('pesad') || lastUserQuery.includes('emperr') || lastUserQuery.includes('trava') || lastUserQuery.includes('dura')) {
-      fallbackReply = 'Quando as lâminas de vidro da sacada ficam pesadas ou travando ao deslizar, o motivo é o desgaste do nylon das roldanas. A **Anderson Sacadas** faz a substituição por roldanas blindadas em **Aço Inox 304** no próprio local, devolvendo o deslizamento suave! Agende uma visita sem taxa pelo WhatsApp **(11) 93449-3446**.';
-    } else if (lastUserQuery.includes('chuva') || lastUserQuery.includes('vaza') || lastUserQuery.includes('água') || lastUserQuery.includes('infiltr')) {
-      fallbackReply = 'Infiltrações de água na chuva ocorrem quando o silicone comum resseca e racha sob o sol. Nós aplicamos **silicone de cura neutra estrutural com proteção UV** e trocamos as escovas de vedação náuticas para proteger o piso e móveis da sua sala!';
-    } else if (lastUserQuery.includes('taxa') || lastUserQuery.includes('visita') || lastUserQuery.includes('custa') || lastUserQuery.includes('orçamento') || lastUserQuery.includes('valor')) {
-      fallbackReply = 'Não cobramos taxa de visita técnica em São Paulo, ABC, Alphaville e Litoral. A avaliação e o orçamento são 100% gratuitos e sem compromisso. Clique no botão abaixo para chamar no WhatsApp **(11) 93449-3446**!';
-    } else if (lastUserQuery.includes('faliu') || lastUserQuery.includes('marca') || lastUserQuery.includes('peça') || lastUserQuery.includes('antig')) {
-      fallbackReply = 'Mesmo se a empresa que instalou a sua sacada fechou ou a marca saiu de linha, a **Anderson Sacadas** possui ferramentaria própria e usina peças sob medida para qualquer modelo (Reiki, Blindex, Mansur, Sanglass, etc.). Não é necessário trocar a sacada inteira!';
+    if (lastUserQuery.includes('pesad') || lastUserQuery.includes('emperr') || lastUserQuery.includes('trava') || lastUserQuery.includes('dura') || lastUserQuery.includes('ruido') || lastUserQuery.includes('barulho')) {
+      fallbackReply = 'Quando as lâminas de vidro da sacada ficam pesadas, travando ou fazendo barulho ao deslizar, o motivo é a quebra do revestimento de nylon das roldanas. A **Anderson Sacadas** faz a substituição por roldanas blindadas em **Aço Inox 304** no próprio local, devolvendo o deslizamento leve com a ponta dos dedos! Agende uma visita sem taxa pelo WhatsApp **(11) 93449-3446**.';
+    } else if (lastUserQuery.includes('chuva') || lastUserQuery.includes('vaza') || lastUserQuery.includes('água') || lastUserQuery.includes('infiltr') || lastUserQuery.includes('piso')) {
+      fallbackReply = 'Infiltrações de água em dias de chuva ocorrem quando o silicone comum resseca e racha sob a luz solar. Nós raspamos o silicone velho e aplicamos **silicone de cura neutra estrutural com proteção UV** e escovas de vedação náuticas impermeáveis, eliminando vazamentos no piso laminado!';
+    } else if (lastUserQuery.includes('taxa') || lastUserQuery.includes('visita') || lastUserQuery.includes('custa') || lastUserQuery.includes('orçamento') || lastUserQuery.includes('valor') || lastUserQuery.includes('preço')) {
+      fallbackReply = 'Não cobramos taxa de visita técnica em São Paulo, ABC, Alphaville e Litoral. A avaliação técnica e o orçamento são 100% gratuitos e sem compromisso. Clique no botão de WhatsApp abaixo para agendar com o técnico pelo número **(11) 93449-3446**!';
+    } else if (lastUserQuery.includes('faliu') || lastUserQuery.includes('marca') || lastUserQuery.includes('peça') || lastUserQuery.includes('antig') || lastUserQuery.includes('reiki') || lastUserQuery.includes('blindex')) {
+      fallbackReply = 'Mesmo se a empresa que instalou a sua sacada fechou ou a marca saiu de linha, a **Anderson Sacadas** possui ferramentaria própria e usina peças sob medida para qualquer modelo (Reiki, Blindex, Mansur, Sanglass, etc.). Você economiza até 70% pois não precisa trocar a sacada inteira!';
+    } else if (lastUserQuery.includes('garantia') || lastUserQuery.includes('nota') || lastUserQuery.includes('laudo') || lastUserQuery.includes('art') || lastUserQuery.includes('nbr') || lastUserQuery.includes('condominio')) {
+      fallbackReply = 'Todos os nossos serviços contam com **garantia por escrito de até 2 anos**, emissão de Nota Fiscal e Laudo Técnico de Vistoria de Conformidade segundo a norma ABNT NBR 16259 para o seu condomínio.';
     }
 
     return res.json({ reply: fallbackReply });
