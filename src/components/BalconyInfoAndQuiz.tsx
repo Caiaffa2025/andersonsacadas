@@ -5,7 +5,6 @@ import {
   XCircle, 
   AlertTriangle, 
   Lightbulb, 
-  ShieldCheck, 
   BookOpen, 
   Award, 
   RotateCcw, 
@@ -14,9 +13,11 @@ import {
   Wrench,
   FileText,
   Sparkles,
-  ChevronRight
+  ChevronRight,
+  Eye
 } from 'lucide-react';
 import { AnimatedSection } from './AnimatedSection';
+import { ReaderModeModal, ArticleData } from './ReaderModeModal';
 
 interface Question {
   id: number;
@@ -83,6 +84,7 @@ export const BalconyInfoAndQuiz: React.FC = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<{ [key: number]: number }>({});
   const [showResults, setShowResults] = useState(false);
+  const [readerArticle, setReaderArticle] = useState<ArticleData | null>(null);
 
   const handleSelectOption = (questionIndex: number, optionIndex: number) => {
     setSelectedAnswers({ ...selectedAnswers, [questionIndex]: optionIndex });
@@ -116,6 +118,29 @@ export const BalconyInfoAndQuiz: React.FC = () => {
   const currentQuestion = QUIZ_QUESTIONS[currentQuestionIndex];
   const hasAnsweredCurrent = selectedAnswers[currentQuestionIndex] !== undefined;
 
+  const openCardInReaderMode = (title: string, category: string, summary: string, detail: string) => {
+    setReaderArticle({
+      title,
+      category,
+      readTime: '2 min de leitura',
+      summary,
+      sections: [
+        {
+          title: 'Detalhamento Técnico e Cuidados',
+          content: detail,
+        },
+      ],
+      doList: [
+        'Realizar manutenção preventiva periódica',
+        'Contatar profissionais habilitados com registro no CREA',
+      ],
+      dontList: [
+        'Nunca aplicar produtos abrasivos ou graxas pesadas',
+      ],
+      conclusion: 'A Anderson Sacadas realiza vistorias técnicas completas com emissão de relatório e ART.',
+    });
+  };
+
   return (
     <section id="informacoes-quiz" className="py-16 sm:py-24 border-b border-slate-800/80 bg-[#090d15]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -130,7 +155,7 @@ export const BalconyInfoAndQuiz: React.FC = () => {
             O que você precisa saber sobre a segurança da sua sacada
           </h2>
           <p className="mt-3 text-base text-slate-300">
-            Envidraçamentos de sacada são estruturas de engenharia submetidas a rajadas de vento e cargas de peso elevadas. Conheça as orientações técnicas fundamentais.
+            Envidraçamentos de sacada são estruturas de engenharia submetidas a rajadas de vento e cargas de peso elevadas. Conheça as orientações técnicas fundamentais e leia no **Modo Leitura sem distrações**.
           </p>
         </AnimatedSection>
 
@@ -149,8 +174,21 @@ export const BalconyInfoAndQuiz: React.FC = () => {
                 Estabelece os requisitos de segurança e desempenho para sistemas de envidraçamento. Exige que a estrutura suporte pressões de vento de até 180 km/h sem risco de descolamento.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-cyan-400 font-semibold">
-              Conformidade Obrigatória
+            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+              <span className="text-cyan-400 font-semibold">Conformidade Obrigatória</span>
+              <button
+                type="button"
+                onClick={() => openCardInReaderMode(
+                  'Norma ABNT NBR 16259 e Exigências do Condomínio',
+                  'Norma Técnica & Segurança',
+                  'A NBR 16259 regulamenta o envidraçamento de sacadas no Brasil para suportar rajadas de vento de até 180 km/h.',
+                  'A NBR 16259 estabelece os requisitos mínimos de desempenho estrutural, resistência e prevenção de quedas. É a norma exigida por síndicos e administrações condominiais, necessitando de Anotação de Responsabilidade Técnica (ART/RDT) do CREA.'
+                )}
+                className="px-2 py-0.5 rounded bg-slate-800 hover:bg-cyan-950 text-cyan-300 border border-slate-700 text-[10px] font-bold flex items-center gap-1 transition-colors cursor-pointer"
+              >
+                <Eye className="w-3 h-3 text-cyan-400" />
+                <span>Modo Leitura</span>
+              </button>
             </div>
           </AnimatedSection>
 
@@ -166,8 +204,21 @@ export const BalconyInfoAndQuiz: React.FC = () => {
                 Usar graxa ou óleos pesados atrai poeira da rua e cria uma massa dura que trava os rolamentos. A limpeza deve ser feita com pano úmido e lubrificação neutra específica.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-rose-400 font-semibold">
-              Erro Mais Comum
+            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+              <span className="text-rose-400 font-semibold">Erro Mais Comum</span>
+              <button
+                type="button"
+                onClick={() => openCardInReaderMode(
+                  'Por que a Graxa Automotiva Destrói o Trilho da Sacada',
+                  'Cuidados de Manutenção',
+                  'Produtos viscosos de petróleo formam uma pasta abrasiva com a poeira da rua que consome as roldanas.',
+                  'Aplicar graxa ou vaselina sólida nos trilhos inferiores retém toda a poeira e fuligem trazidas pelo vento. Em poucas semanas essa mistura vira uma lixa química que racha o nylon das roldanas e emperra os rolamentos.'
+                )}
+                className="px-2 py-0.5 rounded bg-slate-800 hover:bg-cyan-950 text-cyan-300 border border-slate-700 text-[10px] font-bold flex items-center gap-1 transition-colors cursor-pointer"
+              >
+                <Eye className="w-3 h-3 text-cyan-400" />
+                <span>Modo Leitura</span>
+              </button>
             </div>
           </AnimatedSection>
 
@@ -183,8 +234,21 @@ export const BalconyInfoAndQuiz: React.FC = () => {
                 O silicone comum resseca com os raios solares e racha em 12 meses. O silicone de cura neutra estrutural mantém a elasticidade e impede a passagem de água em tempestades.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-emerald-400 font-semibold">
-              Proteção do Piso
+            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+              <span className="text-emerald-400 font-semibold">Proteção do Piso</span>
+              <button
+                type="button"
+                onClick={() => openCardInReaderMode(
+                  'Vedação com Silicone de Cura Neutra UV vs Silicone Comum',
+                  'Vedação & Infiltração',
+                  'Silicone comum de banheiro amarela e racha com a radiação solar na sacada, provocando vazamentos graves no piso.',
+                  'A vedação perimetral eficiente requer silicone neutro de cura estrutural com proteção contra raios solares UV. Esse produto não corrói o alumínio e mantém a flexibilidade necessária para resistir à movimentação dos vidros sob ventania.'
+                )}
+                className="px-2 py-0.5 rounded bg-slate-800 hover:bg-cyan-950 text-cyan-300 border border-slate-700 text-[10px] font-bold flex items-center gap-1 transition-colors cursor-pointer"
+              >
+                <Eye className="w-3 h-3 text-cyan-400" />
+                <span>Modo Leitura</span>
+              </button>
             </div>
           </AnimatedSection>
 
@@ -200,8 +264,21 @@ export const BalconyInfoAndQuiz: React.FC = () => {
                 Roldanas de ferro doce enferrujam com a umidade da chuva. A Anderson Sacadas utiliza exclusivamente conjuntos com rolamentos blindados 2RS e eixos em Aço Inox AISI 304.
               </p>
             </div>
-            <div className="mt-4 pt-3 border-t border-slate-800/80 text-[11px] text-cyan-400 font-semibold">
-              Durabilidade 5x Maior
+            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px]">
+              <span className="text-cyan-400 font-semibold">Durabilidade 5x Maior</span>
+              <button
+                type="button"
+                onClick={() => openCardInReaderMode(
+                  'Roldanas Blindadas em Aço Inox 304 vs Roldanas Genéricas de Ferro',
+                  'Engenharia de Roldanas',
+                  'Roldanas genéricas de ferro doce travam e oxidam na maresia. Roldanas blindadas em aço inox 304 duram anos sem esforço.',
+                  'Nossas roldanas recebem vedação blindada dupla (2RS) com graxa sintética náutica e eixos usinados em Aço Inoxidável AISI 304. Isso garante deslizamento leve com a ponta dos dedos e resistência total contra maresia e corrosão.'
+                )}
+                className="px-2 py-0.5 rounded bg-slate-800 hover:bg-cyan-950 text-cyan-300 border border-slate-700 text-[10px] font-bold flex items-center gap-1 transition-colors cursor-pointer"
+              >
+                <Eye className="w-3 h-3 text-cyan-400" />
+                <span>Modo Leitura</span>
+              </button>
             </div>
           </AnimatedSection>
 
@@ -345,7 +422,7 @@ export const BalconyInfoAndQuiz: React.FC = () => {
                       {calculateScore() >= 4
                         ? 'Parabéns! Você demonstra excelente conhecimento sobre a segurança do envidraçamento de sacadas!'
                         : calculateScore() >= 2
-                        ? 'Muito bem! Você entende os conceitos básicos, mas vale a pena agendar uma revisão preventiva com o Anderson.'
+                        ? 'Muito bem! Você entende os conceitos básicos, mas vale a pena agendar uma revisão preventiva com a Anderson Sacadas.'
                         : 'Atenção! Sua sacada pode estar precisando de uma inspeção urgente para evitar riscos de emperramento ou vazamentos.'}
                     </p>
                   </div>
@@ -389,7 +466,7 @@ export const BalconyInfoAndQuiz: React.FC = () => {
                     </button>
 
                     <a
-                      href={`https://wa.me/5511999999999?text=Ol%C3%A1%20Anderson!%20Fiz%20o%20Quiz%20no%20site%20e%20acertei%20${calculateScore()}%20de%205%20perguntas.%20Gostaria%20de%20agendar%20uma%20visita%20t%C3%A9cnica%20gratuita%20para%20minha%20sacada.`}
+                      href={`https://wa.me/5511934493446?text=Ol%C3%A1%20Anderson!%20Fiz%20o%20Quiz%20no%20site%20e%20acertei%20${calculateScore()}%20de%205%20perguntas.%20Gostaria%20de%20agendar%20uma%20visita%20t%C3%A9cnica%20gratuita%20para%20minha%20sacada.`}
                       target="_blank"
                       rel="noreferrer"
                       className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 text-xs sm:text-sm font-bold shadow-lg shadow-cyan-500/20 cursor-pointer transition-all active:scale-95"
@@ -407,6 +484,13 @@ export const BalconyInfoAndQuiz: React.FC = () => {
         </div>
 
       </div>
+
+      {/* READER MODE MODAL */}
+      <ReaderModeModal
+        article={readerArticle}
+        onClose={() => setReaderArticle(null)}
+      />
+
     </section>
   );
 };

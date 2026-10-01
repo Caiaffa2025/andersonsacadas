@@ -20,6 +20,7 @@ import { QuoteModal } from './components/QuoteModal';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { ScrollToTopButton } from './components/ScrollToTopButton';
 import { SEOHead } from './components/SEOHead';
+import { AIChatWidget } from './components/AIChatWidget';
 
 export default function App() {
   const [quoteModalOpen, setQuoteModalOpen] = useState(false);
@@ -107,6 +108,9 @@ export default function App() {
 
         {/* Fixed Back to Top Button */}
         <ScrollToTopButton />
+
+        {/* AI Customer Support Chat Assistant */}
+        <AIChatWidget />
 
         {/* Discreet Floating WhatsApp Button */}
         <FloatingWhatsApp />

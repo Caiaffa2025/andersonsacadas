@@ -13,25 +13,13 @@ import {
   Loader2, 
   Send,
   ShieldAlert,
-  ArrowRight
+  ArrowRight,
+  Eye
 } from 'lucide-react';
 import { AnimatedSection } from './AnimatedSection';
+import { ReaderModeModal, ArticleData } from './ReaderModeModal';
 
-export interface Article {
-  id?: string;
-  title: string;
-  category: string;
-  readTime: string;
-  summary: string;
-  sections: { title: string; content: string }[];
-  doList: string[];
-  dontList: string[];
-  conclusion?: string;
-  sources?: { title: string; url: string }[];
-  isSearchResult?: boolean;
-}
-
-const PRESET_ARTICLES: Article[] = [
+const PRESET_ARTICLES: ArticleData[] = [
   {
     id: 'graxa-trilhos',
     title: 'Por que NUNCA usar graxa ou vaselina sólida nos trilhos da sacada',
@@ -41,7 +29,7 @@ const PRESET_ARTICLES: Article[] = [
     sections: [
       {
         title: 'O Efeito "Pasta Abrasiva"',
-        content: 'Quando você aplica graxa comum ou vaselina sólida no trilho inferior da sacada, esses produtos viscosos retêm toda a poeira, fuligem de fuligem da rua e grãos de areia trazidos pelo vento. Em poucas semanas, essa mistura vira uma lixa química que desgasta o revestimento exterior de nylon das roldanas e emperra os rolamentos.'
+        content: 'Quando você aplica graxa comum ou vaselina sólida no trilho inferior da sacada, esses produtos viscosos retêm toda a poeira, fuligem da rua e grãos de areia trazidos pelo vento. Em poucas semanas, essa mistura vira uma lixa química que desgasta o revestimento exterior de nylon das roldanas e emperra os rolamentos.'
       },
       {
         title: 'Como Fazer a Lubrificação Correta',
@@ -145,9 +133,9 @@ const PRESET_ARTICLES: Article[] = [
 export const BlogAndExpertTips: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [activeArticle, setActiveArticle] = useState<Article | null>(null);
-  const [searchResultArticle, setSearchResultArticle] = useState<Article | null>(null);
-  const [searchSources, setSearchSources] = useState<{ title: string; url: string }[]>([]);
+  const [activeArticle, setActiveArticle] = useState<ArticleData | null>(null);
+  const [readerModeArticle, setReaderModeArticle] = useState<ArticleData | null>(null);
+  const [searchResultArticle, setSearchResultArticle] = useState<ArticleData | null>(null);
   const [searchError, setSearchError] = useState<string | null>(null);
 
   const handleExecuteSearch = async (e?: React.FormEvent) => {
@@ -170,13 +158,12 @@ export const BlogAndExpertTips: React.FC = () => {
 
       const data = await response.json();
       if (data.article) {
-        const fullArticle: Article = {
+        const fullArticle: ArticleData = {
           ...data.article,
           isSearchResult: true,
           sources: data.sources || [],
         };
         setSearchResultArticle(fullArticle);
-        setSearchSources(data.sources || []);
         setActiveArticle(fullArticle);
       } else {
         throw new Error('Nenhum conteúdo retornado.');
@@ -210,7 +197,7 @@ export const BlogAndExpertTips: React.FC = () => {
             Base de Conhecimento & Tópicos de Envidraçamento
           </h2>
           <p className="mt-3 text-base text-slate-300">
-            Aprenda como conservar o seu sistema, evitar armadilhas de manutenção e tire dúvidas com a nossa IA com busca em tempo real (Search Grounding).
+            Aprenda como conservar o seu sistema, evitar armadilhas de manutenção e leia no **Modo Leitura sem distrações** no seu celular ou computador.
           </p>
         </AnimatedSection>
 
@@ -314,14 +301,25 @@ export const BlogAndExpertTips: React.FC = () => {
                 </p>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setActiveArticle(searchResultArticle)}
-                className="px-5 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-xs shrink-0 cursor-pointer shadow-md shadow-cyan-500/20 transition-all flex items-center gap-1.5"
-              >
-                <span>Ler Artigo Completo</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setReaderModeArticle(searchResultArticle)}
+                  className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-cyan-500/40 font-bold text-xs cursor-pointer transition-all flex items-center gap-1.5"
+                >
+                  <Eye className="w-4 h-4 text-cyan-400" />
+                  <span>Modo Leitura</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setActiveArticle(searchResultArticle)}
+                  className="px-5 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-xs cursor-pointer shadow-md shadow-cyan-500/20 transition-all flex items-center gap-1.5"
+                >
+                  <span>Ler Artigo</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </AnimatedSection>
         )}
@@ -355,9 +353,24 @@ export const BlogAndExpertTips: React.FC = () => {
                 </p>
               </div>
 
-              <div className="mt-5 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs font-bold text-cyan-400 group-hover:text-cyan-300">
-                <span>Ler Dica Completa</span>
-                <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <div className="mt-5 pt-3 border-t border-slate-800/80 flex items-center justify-between gap-2 text-xs">
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setReaderModeArticle(article);
+                  }}
+                  className="px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-cyan-950 text-cyan-300 border border-slate-700 hover:border-cyan-500/40 text-[11px] font-bold flex items-center gap-1 transition-colors"
+                  title="Abrir no Modo Leitura Sem Distrações"
+                >
+                  <Eye className="w-3.5 h-3.5 text-cyan-400" />
+                  <span>Modo Leitura</span>
+                </button>
+
+                <div className="font-bold text-cyan-400 group-hover:text-cyan-300 flex items-center gap-0.5">
+                  <span>Ler</span>
+                  <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
             </AnimatedSection>
           ))}
@@ -365,19 +378,31 @@ export const BlogAndExpertTips: React.FC = () => {
 
       </div>
 
-      {/* ARTICLE READER MODAL */}
-      {activeArticle && (
+      {/* STANDARD ARTICLE MODAL */}
+      {activeArticle && !readerModeArticle && (
         <div className="fixed inset-0 z-[120] bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
           <div className="bg-slate-900 border border-cyan-500/40 rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl relative p-6 sm:p-8 space-y-6">
             
-            {/* Close Button */}
-            <button
-              type="button"
-              onClick={() => setActiveArticle(null)}
-              className="absolute top-5 right-5 w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center cursor-pointer transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            {/* Action Bar Header */}
+            <div className="flex items-center justify-between gap-2 border-b border-slate-800 pb-4">
+              <button
+                type="button"
+                onClick={() => setReaderModeArticle(activeArticle)}
+                className="px-3 py-1.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40 text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer"
+              >
+                <Eye className="w-4 h-4 text-cyan-400" />
+                <span>Ativar Modo Leitura (Sem Distrações)</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setActiveArticle(null)}
+                className="w-9 h-9 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center cursor-pointer transition-colors"
+                aria-label="Fechar artigo"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
 
             {/* Article Modal Header */}
             <div>
@@ -486,7 +511,7 @@ export const BlogAndExpertTips: React.FC = () => {
                 </p>
 
                 <a
-                  href={`https://wa.me/5511999999999?text=Ol%C3%A1%20Anderson!%20Li%20o%20artigo%20'${encodeURIComponent(activeArticle.title)}'%20no%20seu%20site%20e%20gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20minha%20sacada.`}
+                  href={`https://wa.me/5511934493446?text=Ol%C3%A1%20Anderson!%20Li%20o%20artigo%20'${encodeURIComponent(activeArticle.title)}'%20no%20seu%20site%20e%20gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20minha%20sacada.`}
                   target="_blank"
                   rel="noreferrer"
                   className="px-5 py-2.5 rounded-xl bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-bold text-xs shrink-0 cursor-pointer shadow-md shadow-cyan-500/20 transition-all flex items-center gap-1.5 whitespace-nowrap active:scale-95"
@@ -500,6 +525,12 @@ export const BlogAndExpertTips: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* DEDICATED READER MODE MODAL */}
+      <ReaderModeModal
+        article={readerModeArticle}
+        onClose={() => setReaderModeArticle(null)}
+      />
 
     </section>
   );

@@ -12,7 +12,96 @@ const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 
-// Search Grounding Blog Search Endpoint
+// Initialize Gemini SDK with telemetry header
+const getAIClient = () => {
+  return new GoogleGenAI({
+    apiKey: process.env.GEMINI_API_KEY,
+    httpOptions: {
+      headers: {
+        'User-Agent': 'aistudio-build',
+      },
+    },
+  });
+};
+
+// 1. AI Customer Support Chat Endpoint
+app.post('/api/chat', async (req, res) => {
+  const { messages } = req.body;
+  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+    return res.status(400).json({ error: 'Histórico de mensagens é obrigatório' });
+  }
+
+  const systemInstruction = `Você é o Assistente Virtual Inteligente da "Anderson Sacadas" — especialista número 1 em manutenção, regulagem, vedação e usinagem de peças para envidraçamento de sacadas no estado de São Paulo desde 2014.
+
+Sua missão é responder dúvidas técnicas dos clientes de forma rápida, clara, gentil, profissional e sincera.
+
+Diretrizes Principais:
+1. Identidade: Você é o suporte inteligente da Anderson Sacadas (Anderson Sacadas - Desde 2014).
+2. Especialidades: Troca de roldanas blindadas em aço inox 304 (que não oxida nem emperra com maresia), vedação contra chuvas com silicone estrutural UV e escovas náuticas, regulagem e prumo de lâminas travadas, e fabricação própria de peças fora de linha/patenteadas para todas as marcas (Reiki, Blindex, Mansur, Sanglass, Stanley, etc.).
+3. Transparência: Em 96% dos casos NÃO é necessário trocar a sacada toda. Explicar que a manutenção recupera o sistema por uma fração do valor de uma sacada nova.
+4. Padrões de Segurança: Conhecimento da norma ABNT NBR 16259 e emissão de laudo/relatório para condomínios.
+5. Ação e Agendamento: Se o cliente quiser agendar uma visita técnica ou orçamento final, informe que a visita não possui taxa e oriente a clicar no botão de WhatsApp para falar direto com o técnico pelo número (11) 93449-3446.
+6. Estilo de resposta: Curta, direta, organizada com marcadores quando apropriado e muito solícita. Em português do Brasil.`;
+
+  try {
+    const ai = getAIClient();
+
+    // Convert messages for model
+    let contents = messages.map((m: { role: string; content: string }) => ({
+      role: m.role === 'user' ? 'user' : 'model',
+      parts: [{ text: m.content }],
+    }));
+
+    // CRITICAL FIX FOR GEMINI API: First element in contents MUST have role 'user'
+    while (contents.length > 0 && contents[0].role === 'model') {
+      contents.shift();
+    }
+
+    if (contents.length === 0) {
+      const lastUserMsg = messages.filter((m: any) => m.role === 'user').pop();
+      contents = [
+        {
+          role: 'user',
+          parts: [{ text: lastUserMsg?.content || 'Olá, gostaria de saber sobre manutenção de sacadas.' }],
+        },
+      ];
+    }
+
+    const response = await ai.models.generateContent({
+      model: 'gemini-3.8-flash',
+      contents,
+      config: {
+        systemInstruction,
+        temperature: 0.7,
+      },
+    });
+
+    const reply = response.text || 'Olá! Como posso te ajudar com a manutenção ou regulagem da sua sacada hoje?';
+
+    return res.json({ reply });
+  } catch (error: any) {
+    console.error('Erro na rota /api/chat:', error?.message || error);
+
+    // Smart Domain Fallback Response ensuring the user always receives an accurate, expert reply
+    const lastUserQuery = messages.filter((m: any) => m.role === 'user').pop()?.content?.toLowerCase() || '';
+    
+    let fallbackReply = 'Nossa equipe técnica da **Anderson Sacadas** (desde 2014) atende toda a Grande SP e Litoral sem taxa de visita. Você pode agendar sua avaliação gratuita no WhatsApp **(11) 93449-3446**!';
+
+    if (lastUserQuery.includes('pesad') || lastUserQuery.includes('emperr') || lastUserQuery.includes('trava') || lastUserQuery.includes('dura')) {
+      fallbackReply = 'Quando as lâminas de vidro da sacada ficam pesadas ou travando ao deslizar, o motivo é o desgaste do nylon das roldanas. A **Anderson Sacadas** faz a substituição por roldanas blindadas em **Aço Inox 304** no próprio local, devolvendo o deslizamento suave! Agende uma visita sem taxa pelo WhatsApp **(11) 93449-3446**.';
+    } else if (lastUserQuery.includes('chuva') || lastUserQuery.includes('vaza') || lastUserQuery.includes('água') || lastUserQuery.includes('infiltr')) {
+      fallbackReply = 'Infiltrações de água na chuva ocorrem quando o silicone comum resseca e racha sob o sol. Nós aplicamos **silicone de cura neutra estrutural com proteção UV** e trocamos as escovas de vedação náuticas para proteger o piso e móveis da sua sala!';
+    } else if (lastUserQuery.includes('taxa') || lastUserQuery.includes('visita') || lastUserQuery.includes('custa') || lastUserQuery.includes('orçamento') || lastUserQuery.includes('valor')) {
+      fallbackReply = 'Não cobramos taxa de visita técnica em São Paulo, ABC, Alphaville e Litoral. A avaliação e o orçamento são 100% gratuitos e sem compromisso. Clique no botão abaixo para chamar no WhatsApp **(11) 93449-3446**!';
+    } else if (lastUserQuery.includes('faliu') || lastUserQuery.includes('marca') || lastUserQuery.includes('peça') || lastUserQuery.includes('antig')) {
+      fallbackReply = 'Mesmo se a empresa que instalou a sua sacada fechou ou a marca saiu de linha, a **Anderson Sacadas** possui ferramentaria própria e usina peças sob medida para qualquer modelo (Reiki, Blindex, Mansur, Sanglass, etc.). Não é necessário trocar a sacada inteira!';
+    }
+
+    return res.json({ reply: fallbackReply });
+  }
+});
+
+// 2. Search Grounding Blog Search Endpoint
 app.post('/api/blog/search', async (req, res) => {
   try {
     const { query } = req.body;
@@ -20,14 +109,7 @@ app.post('/api/blog/search', async (req, res) => {
       return res.status(400).json({ error: 'Termo de busca é obrigatório' });
     }
 
-    const ai = new GoogleGenAI({
-      apiKey: process.env.GEMINI_API_KEY,
-      httpOptions: {
-        headers: {
-          'User-Agent': 'aistudio-build',
-        },
-      },
-    });
+    const ai = getAIClient();
 
     const prompt = `Você é o Anderson, técnico e especialista fundador da Anderson Sacadas, com mais de 10 anos de experiência em manutenção de envidraçamentos.
 O usuário quer ler um artigo de dicas de especialista sobre: "${query}".
