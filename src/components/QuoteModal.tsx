@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Send, CheckCircle2, ShieldCheck, MessageCircle, AlertCircle } from 'lucide-react';
+import { X, CheckCircle2, ShieldCheck, MessageCircle, AlertCircle } from 'lucide-react';
 
 interface QuoteModalProps {
   isOpen: boolean;
@@ -12,12 +12,24 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
   const [phone, setPhone] = useState('');
   const [neighborhood, setNeighborhood] = useState('');
   const [condo, setCondo] = useState('');
-  const [panels, setPanels] = useState('8');
+  const [panels, setPanels] = useState('8 vidros');
   const [problemDescription, setProblemDescription] = useState(initialTopic || '');
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
 
   if (!isOpen) return null;
+
+  const getWhatsAppForwardLink = () => {
+    const text = `Olá, Anderson Sacadas! Gostaria de solicitar uma Avaliação Técnica:%0A%0A` +
+      `• Nome: ${encodeURIComponent(name || 'Cliente')}%0A` +
+      `• Telefone/WhatsApp: ${encodeURIComponent(phone)}%0A` +
+      `• Bairro/Cidade: ${encodeURIComponent(neighborhood || 'Não informado')}%0A` +
+      `• Condomínio: ${encodeURIComponent(condo || 'Não informado')}%0A` +
+      `• Quantidade de lâminas: ${encodeURIComponent(panels)}%0A` +
+      `• O que ocorre na sacada: ${encodeURIComponent(problemDescription || 'Manutenção geral / Avaliação técnica')}%0A%0A` +
+      `Por favor, aguardo o orçamento e a confirmação de disponibilidade de atendimento.`;
+    return `https://wa.me/5511934493446?text=${text}`;
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,18 +44,10 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
 
     setError('');
     setSubmitted(true);
-  };
 
-  const getWhatsAppForwardLink = () => {
-    const text = `Olá, Anderson Sacadas! Solicitação de Orçamento:%0A%0A` +
-      `• Nome: ${encodeURIComponent(name || 'Cliente')}%0A` +
-      `• Telefone/WhatsApp: ${encodeURIComponent(phone)}%0A` +
-      `• Bairro/Cidade: ${encodeURIComponent(neighborhood || 'Não informado')}%0A` +
-      `• Condomínio: ${encodeURIComponent(condo || 'Não informado')}%0A` +
-      `• Quantidade de lâminas: ${encodeURIComponent(panels)}%0A` +
-      `• Descrição do problema: ${encodeURIComponent(problemDescription || 'Manutenção geral da sacada')}%0A%0A` +
-      `Gostaria de um retorno com o valor e disponibilidade de data.`;
-    return `https://wa.me/5511934493446?text=${text}`;
+    // Open WhatsApp directly with prefilled form details
+    const waUrl = getWhatsAppForwardLink();
+    window.open(waUrl, '_blank');
   };
 
   const resetForm = () => {
@@ -83,7 +87,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
             </h3>
             
             <p className="text-xs sm:text-sm text-slate-300 mt-1 mb-5">
-              Receba um diagnóstico prévio com estimativa de valor para recuperação do seu envidraçamento.
+              Preencha os campos abaixo para enviar o pedido direto ao WhatsApp do técnico responsável (<strong>11 93449-3446</strong>).
             </p>
 
             {error && (
@@ -118,7 +122,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="(11) 99999-9999"
+                    placeholder="(11) 93449-3446"
                     className="w-full px-3.5 py-2.5 rounded-lg bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-cyan-400"
                   />
                 </div>
@@ -131,7 +135,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                     type="text"
                     value={neighborhood}
                     onChange={(e) => setNeighborhood(e.target.value)}
-                    placeholder="Ex: Moema, SP"
+                    placeholder="Ex: Moema, São Paulo"
                     className="w-full px-3.5 py-2.5 rounded-lg bg-slate-800/80 border border-slate-700 text-white placeholder-slate-500 text-xs sm:text-sm focus:outline-none focus:border-cyan-400"
                   />
                 </div>
@@ -185,14 +189,15 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full py-3 px-4 text-xs sm:text-sm font-bold text-slate-950 bg-cyan-400 hover:bg-cyan-300 rounded-xl transition-all shadow-md shadow-cyan-500/20 active:scale-95 cursor-pointer"
+                  className="w-full py-3.5 px-4 text-xs sm:text-sm font-extrabold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-xl transition-all shadow-md shadow-emerald-500/20 active:scale-95 cursor-pointer flex items-center justify-center gap-2"
                 >
-                  Confirmar e Receber Proposta
+                  <MessageCircle className="w-4 h-4 fill-slate-950/20" />
+                  <span>Enviar Informações para o WhatsApp</span>
                 </button>
               </div>
 
               <div className="text-[11px] text-slate-400 text-center pt-1">
-                Seus dados estão protegidos. Não enviamos spam nem repassamos informações.
+                Destino direto: WhatsApp <strong>(11) 93449-3446</strong>. Sem intermediários.
               </div>
             </form>
           </div>
@@ -203,17 +208,19 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
             </div>
 
             <h3 className="font-display text-xl font-bold text-white">
-              Solicitação Registrada com Sucesso!
+              Enviado para o WhatsApp!
             </h3>
 
             <p className="text-xs sm:text-sm text-slate-300 max-w-sm mx-auto leading-relaxed">
-              Obrigado, <strong className="text-white">{name}</strong>! Nossos especialistas técnicos entrarão em contato no seu WhatsApp (<strong className="text-white">{phone}</strong>).
+              Obrigado, <strong className="text-white">{name}</strong>! As informações foram formatadas e enviadas para o WhatsApp da Anderson Sacadas (<strong>11 93449-3446</strong>).
             </p>
 
-            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-left text-xs text-slate-300 space-y-1">
+            <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 text-left text-xs text-slate-300 space-y-1 font-mono">
+              <div><strong>Nome:</strong> {name}</div>
+              <div><strong>Contato:</strong> {phone}</div>
               <div><strong>Local:</strong> {neighborhood || 'Não informado'} {condo ? `(${condo})` : ''}</div>
               <div><strong>Lâminas:</strong> {panels}</div>
-              <div><strong>Observação:</strong> {problemDescription || 'Revisão geral'}</div>
+              <div><strong>Problema:</strong> {problemDescription || 'Avaliação técnica'}</div>
             </div>
 
             <div className="pt-2 flex flex-col gap-2">
@@ -224,7 +231,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                 className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 text-xs sm:text-sm font-bold text-slate-950 bg-emerald-400 hover:bg-emerald-300 rounded-xl transition-all shadow-md shadow-emerald-500/20"
               >
                 <MessageCircle className="w-4 h-4" />
-                <span>Abrir Diretamente no WhatsApp Agora</span>
+                <span>Reabrir Conversa no WhatsApp</span>
               </a>
 
               <button
@@ -232,7 +239,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
                 onClick={resetForm}
                 className="w-full py-2.5 px-4 text-xs font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer"
               >
-                Fechar janela
+                Fechar Janela
               </button>
             </div>
           </div>
