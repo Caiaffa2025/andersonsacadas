@@ -123,7 +123,7 @@ export const DiagnosticCalculator: React.FC<DiagnosticCalculatorProps> = ({ onOp
       `• Idade aproximada: ${systemAge === 'menos-3' ? 'Menos de 3 anos' : systemAge === '3-7' ? '3 a 7 anos' : 'Mais de 7 anos (Marca antiga/extinta)'}%0A` +
       `• Estimativa de Custo: ${estimatedCost.min} a ${estimatedCost.max}%0A%0A` +
       `Gostaria de agendar a visita técnica sem custo para confirmar a avaliação e o orçamento final.`;
-    return `https://wa.me/5511999999999?text=${text}`;
+    return `https://wa.me/5511934493446?text=${text}`;
   };
 
   return (

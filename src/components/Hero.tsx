@@ -77,7 +77,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onScrollToSimulato
               </button>
               
               <a
-                href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20um%20diagn%C3%B3stico%20e%20or%C3%A7amento%20para%20minha%20sacada"
+                href="https://wa.me/5511934493446?text=Ol%C3%A1%2C%20gostaria%20de%20um%20diagn%C3%B3stico%20e%20or%C3%A7amento%20para%20minha%20sacada"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700/80 rounded-lg transition-all active:scale-95 whitespace-nowrap"

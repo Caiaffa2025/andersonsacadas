@@ -194,7 +194,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
 
               {/* Direct WhatsApp CTA */}
               <a
-                href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20para%20manuten%C3%A7%C3%A3o%20da%20minha%20sacada"
+                href="https://wa.me/5511934493446?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20para%20manuten%C3%A7%C3%A3o%20da%20minha%20sacada"
                 target="_blank"
                 rel="noreferrer"
                 className="hidden md:inline-flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-xl transition-all shadow-sm"
@@ -372,7 +372,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
           {/* Mobile Overlay Bottom Actions Bar */}
           <div className="p-4 sm:p-6 bg-[#070a10] border-t border-slate-800 space-y-2.5">
             <a
-              href="https://wa.me/5511999999999?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20para%20manuten%C3%A7%C3%A3o%20da%20minha%20sacada"
+              href="https://wa.me/5511934493446?text=Ol%C3%A1%2C%20gostaria%20de%20um%20or%C3%A7amento%20para%20manuten%C3%A7%C3%A3o%20da%20minha%20sacada"
               target="_blank"
               rel="noreferrer"
               className="flex items-center justify-center gap-2 w-full py-3.5 text-xs sm:text-sm font-bold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-xl transition-all shadow-md"
@@ -398,7 +398,7 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenQuoteModal }) => {
       {/* MOBILE & TABLET STICKY BOTTOM DOCK (< 768px) */}
       <div className="md:hidden fixed bottom-0 inset-x-0 z-30 bg-slate-950/95 backdrop-blur-md border-t border-slate-800 p-2 px-3 shadow-2xl flex items-center justify-around gap-2">
         <a
-          href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Gostaria%20de%20atendimento%20r%C3%A1pido%20pelo%20WhatsApp"
+          href="https://wa.me/5511934493446?text=Ol%C3%A1!%20Gostaria%20de%20atendimento%20r%C3%A1pido%20pelo%20WhatsApp"
           target="_blank"
           rel="noreferrer"
           className="flex-1 flex flex-col items-center justify-center py-1.5 px-2 rounded-xl bg-emerald-950/50 border border-emerald-500/40 text-emerald-400 hover:bg-emerald-900/50 transition-colors"

@@ -102,13 +102,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenQuoteModal }) => {
             </div>
             <div className="space-y-2.5 text-slate-300">
               <a
-                href="https://wa.me/5511999999999"
+                href="https://wa.me/5511934493446"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-2 hover:text-emerald-400 transition-colors"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-400 shrink-0" />
-                <span>WhatsApp: (11) 99999-9999</span>
+                <span>WhatsApp: (11) 93449-3446</span>
               </a>
               <div className="flex items-center gap-2">
                 <Phone className="w-4 h-4 text-cyan-400 shrink-0" />

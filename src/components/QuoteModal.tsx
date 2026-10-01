@@ -43,7 +43,7 @@ export const QuoteModal: React.FC<QuoteModalProps> = ({ isOpen, onClose, initial
       `• Quantidade de lâminas: ${encodeURIComponent(panels)}%0A` +
       `• Descrição do problema: ${encodeURIComponent(problemDescription || 'Manutenção geral da sacada')}%0A%0A` +
       `Gostaria de um retorno com o valor e disponibilidade de data.`;
-    return `https://wa.me/5511999999999?text=${text}`;
+    return `https://wa.me/5511934493446?text=${text}`;
   };
 
   const resetForm = () => {
