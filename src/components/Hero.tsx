@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, CheckCircle2, ArrowRight, MessageCircle, Wrench, Sparkles, AlertTriangle } from 'lucide-react';
+import { CheckCircle2, ArrowRight, MessageCircle, Wrench, Send } from 'lucide-react';
 import { motion } from 'framer-motion';
 import heroImage from '../assets/images/hero_balcony_glass_1790377105614.jpg';
 
@@ -66,13 +66,25 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onScrollToSimulato
               </div>
             </div>
 
-            {/* Primary Action Buttons */}
-            <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4">
+            {/* Primary Action Buttons - With CONSTANTLY BLINKING "Solicitar um Orçamento" BUTTON */}
+            <div className="pt-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 flex-wrap">
+              
+              {/* CONSTANTLY BLINKING SOLICITAR UM ORÇAMENTO BUTTON */}
+              <button
+                type="button"
+                onClick={() => onOpenQuoteModal()}
+                className="relative group overflow-hidden inline-flex items-center justify-center gap-2.5 px-6 py-3.5 text-sm sm:text-base font-extrabold text-slate-950 bg-cyan-400 hover:bg-cyan-300 rounded-xl transition-all shadow-xl shadow-cyan-500/40 active:scale-95 cursor-pointer whitespace-nowrap animate-pulse border-2 border-cyan-200 ring-4 ring-cyan-400/30"
+                title="Clique para abrir formulário de orçamento"
+              >
+                <Send className="w-4 h-4 text-slate-950 shrink-0" />
+                <span>Solicitar um Orçamento</span>
+              </button>
+
               <button
                 onClick={onScrollToSimulator}
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-slate-950 bg-cyan-400 hover:bg-cyan-300 rounded-lg transition-all shadow-lg shadow-cyan-500/20 active:scale-95 cursor-pointer whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-semibold text-slate-200 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/80 rounded-xl transition-all active:scale-95 cursor-pointer whitespace-nowrap"
               >
-                <span>Fazer Diagnóstico Online Grátis</span>
+                <span>Diagnóstico Online Grátis</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               
@@ -80,14 +92,14 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onScrollToSimulato
                 href="https://wa.me/5511934493446?text=Ol%C3%A1%2C%20gostaria%20de%20um%20diagn%C3%B3stico%20e%20or%C3%A7amento%20para%20minha%20sacada"
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 text-sm font-semibold text-white bg-slate-800/90 hover:bg-slate-700/90 border border-slate-700/80 rounded-lg transition-all active:scale-95 whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 text-xs sm:text-sm font-bold text-emerald-400 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-xl transition-all active:scale-95 whitespace-nowrap"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-400" />
-                <span>Falar com Técnico no WhatsApp</span>
+                <span>Falar no WhatsApp</span>
               </a>
             </div>
 
-            {/* Trust metadata separator (Clean unboxed inline text) */}
+            {/* Trust metadata separator */}
             <div className="pt-2 flex flex-wrap items-center gap-y-1 gap-x-3 text-xs text-slate-400">
               <span>Atendimento em toda Grande SP e Litoral</span>
               <span aria-hidden="true">·</span>
@@ -149,4 +161,3 @@ export const Hero: React.FC<HeroProps> = ({ onOpenQuoteModal, onScrollToSimulato
     </section>
   );
 };
-
